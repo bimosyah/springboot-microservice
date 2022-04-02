@@ -1,4 +1,4 @@
-package com.bimo.project.customer.response;
+package com.bimo.project.fraud.response;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
