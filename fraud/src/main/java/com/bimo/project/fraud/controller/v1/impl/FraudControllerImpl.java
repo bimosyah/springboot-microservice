@@ -20,6 +20,7 @@ public class FraudControllerImpl implements FraudController {
     @Override
     public FraudHistoryResponse isFraudster(Integer customerId) {
         Boolean fraudulentCustomer = fraudHistoryService.isFraudulentCustomer(customerId);
+        log.info("fraud check request for customer {}", customerId);
         return FraudHistoryResponse.builder().isFraudster(fraudulentCustomer).build();
     }
 }
