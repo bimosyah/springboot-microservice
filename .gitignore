@@ -6,3 +6,7 @@ clients/target/*
 notification/target/*
 *.iml
 
+
+apigw/target/classes/com/bimo/project/
+
+apigw/target/classes/
