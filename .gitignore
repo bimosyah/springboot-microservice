@@ -1,5 +1,5 @@
 .idea
-customer/target
-fraud/target
-eureka-server/target
+customer/target/*
+fraud/target/*
+eureka-server/target/*
 *.iml
