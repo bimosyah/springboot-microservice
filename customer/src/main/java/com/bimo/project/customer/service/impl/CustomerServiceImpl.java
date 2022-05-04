@@ -1,9 +1,10 @@
 package com.bimo.project.customer.service.impl;
 
+import com.bimo.project.clients.fraud.FraudCheckResponse;
+import com.bimo.project.clients.fraud.FraudClient;
 import com.bimo.project.customer.entity.CustomerEntity;
 import com.bimo.project.customer.repository.CustomerRepository;
 import com.bimo.project.customer.request.CustomerRequest;
-import com.bimo.project.customer.response.FraudCustomerCheckResponse;
 import com.bimo.project.customer.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,9 @@ public class CustomerServiceImpl implements CustomerService {
     @Autowired
     RestTemplate restTemplate;
 
+    @Autowired
+    FraudClient fraudClient;
+
     @Override
     public void registerCustomer(CustomerRequest customerRequest) {
         CustomerEntity customer = CustomerEntity.builder()
@@ -28,14 +32,10 @@ public class CustomerServiceImpl implements CustomerService {
 
         customerRepository.saveAndFlush(customer);
 
-        FraudCustomerCheckResponse response = restTemplate.getForObject(
-                "http://FRAUD/api/v1/fraud-check/{customerId}",
-                FraudCustomerCheckResponse.class,
-                customer.getId()
-        );
+        FraudCheckResponse fraudster = fraudClient.isFraudster(customer.getId());
 
-        assert response != null;
-        if (response.getIsFraudster()) {
+        assert fraudster != null;
+        if (fraudster.getIsFraudster()) {
             throw new IllegalStateException("fraudster");
         }
     }
