@@ -1,4 +1,4 @@
-package com.bimo.project.customer.response;
+package com.bimo.project.clients.fraud;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class FraudCustomerCheckResponse {
+public class FraudCheckResponse {
     @JsonProperty("is_fraudster")
     private Boolean isFraudster;
 }
