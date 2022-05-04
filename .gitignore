@@ -2,10 +2,7 @@
 customer/target/*
 fraud/target/*
 eureka-server/target/*
+clients/target/*
+notification/target/*
 *.iml
 
-clients/target/classes/com/bimo/project/clients/fraud/FraudClient.class
-
-clients/target/classes/com/bimo/project/clients/fraud/FraudCheckResponse.class
-
-clients/target/classes/com/bimo/project/clients/fraud/FraudCheckResponse$FraudCheckResponseBuilder.class

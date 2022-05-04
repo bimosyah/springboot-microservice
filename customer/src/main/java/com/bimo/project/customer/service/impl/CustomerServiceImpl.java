@@ -2,13 +2,14 @@ package com.bimo.project.customer.service.impl;
 
 import com.bimo.project.clients.fraud.FraudCheckResponse;
 import com.bimo.project.clients.fraud.FraudClient;
+import com.bimo.project.clients.notification.NotificationClient;
+import com.bimo.project.clients.notification.NotificationRequest;
 import com.bimo.project.customer.entity.CustomerEntity;
 import com.bimo.project.customer.repository.CustomerRepository;
 import com.bimo.project.customer.request.CustomerRequest;
 import com.bimo.project.customer.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
@@ -17,10 +18,10 @@ public class CustomerServiceImpl implements CustomerService {
     CustomerRepository customerRepository;
 
     @Autowired
-    RestTemplate restTemplate;
+    FraudClient fraudClient;
 
     @Autowired
-    FraudClient fraudClient;
+    NotificationClient notificationClient;
 
     @Override
     public void registerCustomer(CustomerRequest customerRequest) {
@@ -38,5 +39,14 @@ public class CustomerServiceImpl implements CustomerService {
         if (fraudster.getIsFraudster()) {
             throw new IllegalStateException("fraudster");
         }
+
+        notificationClient.sendNotification(
+                new NotificationRequest(
+                        customer.getId(),
+                        customer.getEmail(),
+                        String.format("Hi %s, welcome to Amigoscode...",
+                                customer.getFirstName())
+                )
+        );
     }
 }
